@@ -51,22 +51,23 @@
     <SQL>
       <![CDATA[
           INSERT INTO dev (
-                              id
-							  ,createdAt
-                              ,name
-							  ,avatar
-							  ,squad
-							  ,login
-							  ,email
+                            <Pmf nome="id" null="N">            id</Pmf> 
+                            <Pmf nome="createdAt" null="N">,    createdAt</Pmf> 
+                            <Pmf nome="name" null="N">  ,       name</Pmf> 
+                            <Pmf nome="avatar" null="N">,       avatar</Pmf>
+							<Pmf nome="squad" null="S"> ,       squad</Pmf>
+                            <Pmf nome="login" null="N"> ,       login</Pmf> 
+                            <Pmf nome="email" null="N"> ,       email</Pmf> 
+							 
 
                  ) VALUES (
-                        <Pmf nome="id" null="N"> @id</Pmf> 
-						 <Pmf nome="createdAt" null="S">, @createdAt</Pmf> 
-                        <Pmf nome="name" null="S">, @name</Pmf>
-                        <Pmf nome="avatar" null="S">, @avatar</Pmf>
-                        <Pmf nome="squad" null="S">,  @squad</Pmf>
-                        <Pmf nome="login" null="S">, @login</Pmf>
-                        <Pmf nome="email" null="S">, @email</Pmf>
+                        <Pmf nome="id" null="N">            @id</Pmf> 
+						<Pmf nome="createdAt" null="S">,    @createdAt</Pmf> 
+                        <Pmf nome="name" null="S">,         @name</Pmf>
+                        <Pmf nome="avatar" null="S">,       @avatar</Pmf>
+                        <Pmf nome="squad" null="S">,        @squad</Pmf>
+                        <Pmf nome="login" null="S">,        @login</Pmf>
+                        <Pmf nome="email" null="S">,        @email</Pmf>
 
                           )
 

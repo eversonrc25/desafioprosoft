@@ -28,10 +28,11 @@ namespace DesafioTecnicoProsoft.Camadas.Negocio
         {
             try
             {
-                using (var retornoapi = ConectApi("", "POST", entidade))
-                {
+                entidade.createdAt = DateTime.Now;
+                var retornoapi = ConectApi("", "POST", entidade);
+                entidade = retornoapi[0];
                     return base.Insert(entidade);
-                }
+               
 
                 
             }
@@ -46,10 +47,11 @@ namespace DesafioTecnicoProsoft.Camadas.Negocio
         {
             try
             {
-                using (var retornoapi = ConectApi(entidade.id, "PUT", entidade))
-                {
+                var retornoapi =  ConectApi(entidade.id, "PUT", entidade);
+                
+                    entidade = retornoapi[0];
                     return base.Update(entidade);
-                }
+                
 
 
             }
@@ -75,11 +77,10 @@ namespace DesafioTecnicoProsoft.Camadas.Negocio
 
 
 
-                    using (var retornoapi = ConectApi("", "GET", new Dev()))
-                    {
-                        retorno = retornoapi.Result;
+                    var retornoapi = ConectApi("", "GET", new Dev());
+                    
 
-                        foreach (Dev item in retorno)
+                        foreach (Dev item in retornoapi)
                         {
 
 
@@ -99,7 +100,7 @@ namespace DesafioTecnicoProsoft.Camadas.Negocio
 
 
 
-                    }
+                    
                 }
             }catch (Exception e)
             {
@@ -112,7 +113,7 @@ namespace DesafioTecnicoProsoft.Camadas.Negocio
         }
 
 
-        private async Task<List<Dev>> ConectApi(string querystring, string metodo, Dev entidade)
+        private List<Dev> ConectApi(string querystring, string metodo, Dev entidade)
         {
             using (var cliente = new HttpClient())
             {
@@ -134,9 +135,11 @@ namespace DesafioTecnicoProsoft.Camadas.Negocio
                         if (response.IsSuccessStatusCode)
                         {
 
-                            string retorno = await response.Content.ReadAsStringAsync();
+                           string retorno =  response.Content.ReadAsStringAsync().Result;
                             lista = JsonConvert.DeserializeObject<List<Dev>>(retorno);
 
+                           
+                            
                         }
 
                     }
@@ -150,8 +153,9 @@ namespace DesafioTecnicoProsoft.Camadas.Negocio
                         if (response.IsSuccessStatusCode)
                         {
 
-                            // string retorno = await response.Content.ReadAsStringAsync();
-                            //List<Dev> lista = JsonConvert.DeserializeObject<List<Dev>>(retorno);
+                             string retorno =  response.Content.ReadAsStringAsync().Result;
+                            
+                              lista.Add(JsonConvert.DeserializeObject<Dev>(retorno));
 
                         }
                     }
@@ -165,8 +169,10 @@ namespace DesafioTecnicoProsoft.Camadas.Negocio
 
                         if (response.IsSuccessStatusCode)
                         {
+                            string retorno =  response.Content.ReadAsStringAsync().Result;
+                            lista.Add(JsonConvert.DeserializeObject<Dev>(retorno));
 
-                            //List<Dev> lista = JsonConvert.DeserializeObject<List<Dev>>(retorno);
+
 
                         }
                     }

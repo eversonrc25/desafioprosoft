@@ -9,7 +9,7 @@ using System.Text;
 
 namespace DesafioTecnicoProsoft.Camadas.Entidades
 {
-    [AtributoTabela(Nome = "Dev", Esquema = "", TipoChave = eTipoChave.Automatica)]
+    [AtributoTabela(Nome = "Dev", Esquema = "", TipoChave = eTipoChave.NaoSeAplica)]
     public class Dev : EntityBase, IEntityBase
     {
 

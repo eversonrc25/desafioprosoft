@@ -1,5 +1,7 @@
 ## Projetos
 
+Antes de executar a aplicação ,excutar o script exportar.sql para criação da base, a senha para o usuario sa deve ser subistitudio no aqrquivo appsettings.json e appsettings.Development.json na linha bancosSQL, na aplicação DesafioProsoft-api
+
 ### Framwork
 Projeto de do framework em net core
 
