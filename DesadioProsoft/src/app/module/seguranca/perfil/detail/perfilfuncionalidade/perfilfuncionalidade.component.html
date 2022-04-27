@@ -1,0 +1,14 @@
+<app-perfilfuncionalidade-list
+*ngIf="!action; else detailchild"
+(onClickAction)="clickAction($event)"
+[idParent]="_idParent"
+[nameIdParent]="_nameIdParent"></app-perfilfuncionalidade-list>
+
+<ng-template #detailchild>
+<app-perfilfuncionalidade-crud
+(onClickAction)="clickAction($event)"
+*ngIf="action" [action]="action"
+[idParent]="_idParent"
+[idChild]="idChild"
+[nameIdParent]="_nameIdParent" ></app-perfilfuncionalidade-crud>
+</ng-template>

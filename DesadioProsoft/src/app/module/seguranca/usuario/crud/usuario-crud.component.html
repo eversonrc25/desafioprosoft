@@ -1,0 +1,134 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">{{titulo}}</h4>
+      </div>
+      <div class="card-content">
+        <div class="card-body">
+          <ng-template #loadinganderror>
+            <div *ngIf="(error$ | async) as errorMessage; else loading">
+              <app-showerror [message]="errorMessage.message"></app-showerror>
+            </div>
+            <ng-template #loading>
+              <app-loading></app-loading>
+            </ng-template>
+          </ng-template>
+          <span *ngIf="(retornoApi$ | async) as dadosList; else loadinganderror">
+            <form [formGroup]="formDetail">
+              <div class="form-row">
+
+                <div class="col-md-7 col-12">
+                  <div class="form-group position-relative">
+                    <label for="idusua_tx_nome">Nome</label>
+                    <input type="text" id="idusua_tx_nome" formControlName="usua_tx_nome" maxlength="80"
+                      class="form-control form-control-sm" name="idusua_tx_nome" placeholder="Nome">
+                  </div>
+                </div>
+                <div class="col-md-5 col-12">
+                  <div class="form-group position-relative">
+                    <label for="idusua_tx_apelido">Apelido</label>
+                    <input type="text" id="idusua_tx_apelido" formControlName="usua_tx_apelido" maxlength="40"
+                      class="form-control form-control-sm" name="idusua_tx_apelido" placeholder="Apelido">
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="col-md-2 col-12">
+                  <div class="form-group position-relative">
+                    <label for="idusua_tx_telefone">Telefone</label>
+                    <input type="text" id="idusua_tx_telefone" formControlName="usua_tx_telefone"  maxlength="20"
+                      class="form-control form-control-sm" name="idusua_tx_telefone" placeholder="Telefone">
+
+                  </div>
+                </div>
+                <div class="col-md-3 col-12">
+                  <div class="form-group position-relative">
+                    <label for="idusua_tx_email">E-mail</label>
+                    <input type="text" id="idusua_tx_email" formControlName="usua_tx_email" maxlength="100"
+                      class="form-control form-control-sm" name="idusua_tx_email" placeholder="E-mail">
+
+                  </div>
+                </div>
+                <div class="col-md-3 col-12">
+                  <div class="form-group position-relative">
+                    <label for="idusua_tx_ad">Usuário AD</label>
+                    <input type="text" id="idusua_tx_ad" formControlName="usua_tx_ad" maxlength="100"
+                      class="form-control form-control-sm" name="idusua_tx_ad" placeholder="Usuário AD">
+
+                  </div>
+                </div>
+
+                <div class="col-md-2 col-12">
+                  <div class="form-group position-relative">
+                    <label for="form-action-5">Notifica</label>
+                    <ng-select class="custom" [items]="notifica" formControlName="usua_tx_notifica"
+                      bindLabel="tx_notifica" bindValue="usua_tx_notifica">
+                    </ng-select>
+                  </div>
+                </div>
+
+                <div class="col-md-2 col-12">
+                  <div class="form-group position-relative">
+                    <label for="form-action-5">Situação</label>
+                    <ng-select class="custom" [items]="situacao" formControlName="situ_tx_situacao"
+                      bindLabel="tx_situacao" bindValue="situ_tx_situacao">
+                    </ng-select>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="text-right">
+                <button type="button" class="btn btn-sm btn-secondary mr-1 mb-1" (click)="goBack()">
+                  <strong> <i class="ft-x cursor-pointer"></i>&nbsp;Voltar</strong>
+                </button>
+                <button type="button" class="btn btn-sm btn-danger mr-1 mb-1"
+                  *ngIf="actionScreen=='delete';else edicao;" (click)="onSubmit(true)">
+                  <strong> <i class="ft-x cursor-pointer"></i>&nbsp;Apagar registro</strong>
+                </button>
+                <ng-template #edicao>
+                  <span *ngIf="actionScreen!=='read'">
+                    <button type="button" class="btn btn-sm btn-success mr-1 mb-1" (click)="onSubmit(false)">
+                      <strong> <i class="ft-check-square cursor-pointer"></i>&nbsp;Salvar</strong>
+                    </button>
+                    <button type="button" class="btn btn-sm btn-success mr-1 mb-1" (click)="onSubmit(true)">
+                      <strong> <i class="ft-check-square cursor-pointer"></i>&nbsp;Salvar e Sair</strong>
+                    </button>
+                  </span>
+                </ng-template>
+              </div>
+
+            </form>
+
+            <span *ngIf="actionScreen!=='create'">
+              <ul ngbNav #nav="ngbNav" [destroyOnHide]="false" class="nav-tabs justify-content-left">
+                <li [ngbNavItem]="usuarioperfil">
+                  <a ngbNavLink>Perfil</a>
+                  <ng-template ngbNavContent>
+                    <app-usuarioperfil [nameIdParent]='getId()' [idParent]="dadosList.dados[getId()]">
+                    </app-usuarioperfil>
+                  </ng-template>
+                </li>
+                <li [ngbNavItem]="usuarioempresa">
+                  <a ngbNavLink>Empresa</a>
+                  <ng-template ngbNavContent>
+                    <app-usuarioempresa [nameIdParent]='getId()' [idParent]="dadosList.dados[getId()]">
+                    </app-usuarioempresa>
+                  </ng-template>
+                </li>
+              </ul>
+
+
+              <div [ngbNavOutlet]="nav" class="mt-2"></div>
+            </span>
+
+          </span>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

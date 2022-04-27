@@ -1,0 +1,188 @@
+<!-- ============================================================== -->
+<!-- toggle and nav items -->
+<!-- ============================================================== -->
+<ul class="navbar-nav float-left mr-auto">
+    <li class="nav-item d-none d-md-block">
+        <a (click)="toggleSidebar.emit()" class="nav-link sidebartoggler waves-effect waves-light text-white" href="javascript:void(0)">
+            <i class="mdi mdi-menu font-24"></i>
+        </a>
+    </li>
+    <!-- ============================================================== -->
+    <!-- mega menu -->
+    <!-- ============================================================== -->
+    <li class="nav-item mega-dropdown" ngbDropdown [autoClose]="false">
+       
+    </li>
+
+    
+    <!-- ============================================================== -->
+    <!-- End mega menu -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- create new -->
+    <!-- ============================================================== -->
+    <li class="nav-item dropdown" ngbDropdown>
+      
+    </li>
+    <!-- ============================================================== -->
+    <!-- Search -->
+    <!-- ============================================================== -->
+    <li class="nav-item search-box">
+    
+    </li>
+</ul>
+<!-- ============================================================== -->
+<!-- Right side toggle and nav items -->
+<!-- ============================================================== -->
+<ul class="navbar-nav float-right">
+    <!-- ============================================================== -->
+    <!-- create new -->
+    <!-- ============================================================== -->
+    <!-- <li class="nav-item dropdown" ngbDropdown placement="bottom-right">
+        <a ngbDropdownToggle class="nav-link dropdown-toggle" href="javascript:void(0)" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <i class="flag-icon flag-icon-us"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown" ngbDropdownMenu>
+            <a class="dropdown-item" href="#">
+                <i class="flag-icon flag-icon-us"></i> English</a>
+            <a class="dropdown-item" href="#">
+                <i class="flag-icon flag-icon-fr"></i> French</a>
+            <a class="dropdown-item" href="#">
+                <i class="flag-icon flag-icon-es"></i> Spanish</a>
+            <a class="dropdown-item" href="#">
+                <i class="flag-icon flag-icon-de"></i> German</a>
+        </div>
+    </li> -->
+    <!-- ============================================================== -->
+    <!-- Comment -->
+    <!-- ============================================================== -->
+    <li class="nav-item dropdown" ngbDropdown placement="bottom-right">
+        <!-- <a ngbDropdownToggle class="nav-link dropdown-toggle waves-effect waves-dark" href="javascript:void(0)" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <i class="mdi mdi-bell font-24"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right mailbox" ngbDropdownMenu>
+            <span class="with-arrow">
+                <span class="bg-primary"></span>
+            </span>
+            <ul class="list-style-none">
+                <li>
+                    <div class="drop-title bg-primary text-white">
+                        <h4 class="m-b-0 m-t-5">4 New</h4>
+                        <span class="font-light">Notifications</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="message-center notifications" [perfectScrollbar]="config">
+                        
+                        <a href="javascript:void(0)" class="message-item" *ngFor="let notification of notifications">
+                            <span class="btn btn-circle {{notification.btn}}">
+                                <i class="{{notification.icon}}"></i>
+                            </span>
+                            <span class="mail-contnet">
+                                <h5 class="message-title">{{notification.title}}</h5>
+                                <span class="mail-desc">{{notification.subject}}</span>
+                                <span class="time">{{notification.time}}</span>
+                            </span>
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <a class="nav-link text-center m-b-5" href="javascript:void(0);">
+                        <strong>Check all notifications</strong>
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                </li>
+            </ul>
+        </div> -->
+    </li>
+    <!-- ============================================================== -->
+    <!-- End Comment -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Messages -->
+    <!-- ============================================================== -->
+    <li class="nav-item dropdown" ngbDropdown placement="bottom-right">
+        <!-- <a ngbDropdownToggle class="nav-link dropdown-toggle waves-effect waves-dark" href="javascript:void(0)" id="2" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <i class="font-24 mdi mdi-comment-processing"></i>
+
+        </a>
+        <div class="dropdown-menu dropdown-menu-right mailbox" aria-labelledby="2" ngbDropdownMenu>
+            <span class="with-arrow">
+                <span class="bg-danger"></span>
+            </span>
+            <ul class="list-style-none">
+                <li>
+                    <div class="drop-title text-white bg-danger">
+                        <h4 class="m-b-0 m-t-5">5 New</h4>
+                        <span class="font-light">Messages</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="message-center message-body" [perfectScrollbar]="config">
+                      
+                        <a href="javascript:void(0)" class="message-item" *ngFor="let mymessage of mymessages">
+                            <span class="user-img">
+                                <img src="{{mymessage.useravatar}}" alt="user" class="rounded-circle">
+                                <span class="profile-status {{mymessage.status}} pull-right"></span>
+                            </span>
+                            <span class="mail-contnet">
+                                <h5 class="message-title">{{mymessage.from}}</h5>
+                                <span class="mail-desc">{{mymessage.subject}}</span>
+                                <span class="time">{{mymessage.time}}</span>
+                            </span>
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <a class="nav-link text-center link" href="javascript:void(0);">
+                        <b>See all e-Mails</b>
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                </li>
+            </ul>
+        </div> -->
+    </li>
+    <!-- ============================================================== -->
+    <!-- End Messages -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- User profile and search -->
+    <!-- ============================================================== -->
+    <li class="nav-item" ngbDropdown placement="bottom-right" *ngIf="(currentUser$ | async) as dadosUser;">
+        <a ngbDropdownToggle class="nav-link text-muted waves-effect waves-dark pro-pic" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+            <div class="avatar-circle-sm" style=" display: block;margin:auto;margin-top:5px!important">
+                <span class="initials"  style="top:0px" >{{getAvatar(dadosUser.nome)}}</span>
+              </div>
+
+             
+        </a>
+        <div class="dropdown-menu-right user-dd" ngbDropdownMenu>
+            <span class="with-arrow">
+                <span  style="background-color: #9E260D;"></span>
+            </span>
+            <div class="d-flex no-block align-items-center p-15   text-white m-b-10"  style="background-color: #9E260D;"  >
+                <div class="">
+                    <div class="avatar-circle-sm" style=" display: block;margin:auto">
+                        <span class="initials">{{getAvatar(dadosUser.nome)}}</span>
+                      </div>
+                    <!-- <img src="assets/images/users/1.jpg" alt="user" class="img-circle" width="60"> -->
+                </div>
+                <div class="m-l-10">
+                    <h4 class="m-b-0">{{dadosUser.apelido}}</h4>
+                    <p class=" m-b-0">{{dadosUser.email}}</p>
+                </div>
+            </div>
+           
+            <a class="dropdown-item" href="javascript:void(0)"  (click)="logout()">
+                <i class="fa fa-power-off m-r-5 m-l-5"></i> Logout</a>
+           
+        </div>
+    </li>
+    <!-- ============================================================== -->
+    <!-- User profile and search -->
+    <!-- ============================================================== -->
+</ul>

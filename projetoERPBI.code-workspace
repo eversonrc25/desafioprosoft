@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "apigateway"
+		},
+		{
+			"path": "seguranca-api"
+		},
+		{
+			"path": "Framework"
+		},
+		{
+			"path": "Centralizador-api"
+		},
+		{
+			"path": "Centralizador"
+		}
+	]
+}

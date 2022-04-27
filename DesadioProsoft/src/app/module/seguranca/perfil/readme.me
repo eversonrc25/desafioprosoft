@@ -1,0 +1,50 @@
+# Configurar o SegurancaModule
+## import
+ 
+```typescript
+import { PerfilListComponent } from './perfil/list/perfil-list.component'
+import { PerfilCrudComponent } from './perfil/crud/perfil-crud.component'
+import { PerfilFuncionalidadeComponent } from './perfil/detail/perfilfuncionalidade/perfilfuncionalidade.component'
+import { PerfilFuncionalidadeListComponent } from './perfil/detail/perfilfuncionalidade/list/perfilfuncionalidade-list.component'
+import { PerfilFuncionalidadeCrudComponent } from './perfil/detail/perfilfuncionalidade/crud/perfilfuncionalidade-crud.component'
+```
+## Declaration
+```typescript
+PerfilListComponent, PerfilCrudComponent,
+PerfilFuncionalidadeComponent, PerfilFuncionalidadeListComponent, PerfilFuncionalidadeCrudComponent,
+```
+
+
+# Configurar o SegurancaRoutingModule
+## import
+
+```typescript
+import { PerfilListComponent } from './perfil/list/perfil-list.component'
+import { PerfilCrudComponent } from './perfil/crud/perfil-crud.component'
+
+```
+## Rotas
+```typescript
+{
+  path: 'perfil',
+  component: PerfilListComponent,
+  data: { title: 'Perfil' }
+},
+{
+  path: 'perfil/create',
+  component: PerfilCrudComponent,
+  data: { title: 'Cadastro de Perfil' }
+},{
+  path: 'perfil/read/:id',
+  component: PerfilCrudComponent,
+  data: { title: 'Cadastro de Perfil' }
+},{
+  path: 'perfil/update/:id',
+  component: PerfilCrudComponent,
+  data: { title: 'Cadastro de Perfil' }
+},{
+  path: 'perfil/delete/:id',
+  component: PerfilCrudComponent,
+  data: { title: 'Cadastro de Perfil' }
+},
+```

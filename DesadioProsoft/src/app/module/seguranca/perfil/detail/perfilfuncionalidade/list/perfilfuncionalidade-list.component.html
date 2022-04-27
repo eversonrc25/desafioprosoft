@@ -1,0 +1,86 @@
+<div class="row">
+	<div class="col-12">
+		<div class="card">
+			<div class="card-header">
+				<h4 class="card-title">{{titulo}}</h4>
+			</div>
+			<div class="card-content">
+				<div class="card-body">
+					<form [formGroup]="formFilter">
+						<div class="form-row">
+							<div class="col-md-4">
+								<div class="form-group position-relative">
+									<label for="form-action-5">Situação</label>
+									<ng-select class="custom" [items]="situacao" formControlName="situ_tx_situacao"
+										bindLabel="tx_situacao" bindValue="situ_tx_situacao">
+									</ng-select>
+								</div>
+							</div>
+						</div>
+						<div class="text-right">
+							<button type="button" class="btn btn-sm btn-outline-primary mr-1 mb-1" (click)="onSubmit()">
+								<i class="fa fa-search cursor-pointer"></i>&nbsp;Pesquisar
+							</button>
+						</div>
+					</form>
+					<ng-template #loadinganderror>
+						<div *ngIf="(error$ | async) as errorMessage; else loading">
+							<app-showerror [message]="errorMessage.message"></app-showerror>
+						</div>
+						<ng-template #loading>
+							<app-loading></app-loading>
+						</ng-template>
+					</ng-template>
+					<div class="table-responsive" style="min-height: 300px"
+						*ngIf="(dados$ | async) as dadosList; else loadinganderror">
+						<table class="table table-hover m-0">
+							<thead class="thead-light">
+								<tr>
+									<th class="fit"><button type="button" (click)="clickAction('create')"
+											class="btn btn-sm btn-outline-info">
+											<i class="fa fa-file-o cursor-pointer"></i>&nbsp;Novo</button></th>
+									<th>Funcionalidade</th>
+									<th>Perfil</th>
+									<th>Situação</th>
+									<th>Alteração</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr *ngIf="dadosList.dados.length ==0">
+									<td colspan="100%">
+										<app-nodata></app-nodata>
+									</td>
+
+								</tr>
+								<tr *ngFor="let item of dadosList.dados">
+									<td class="fit">
+										<button type="button" (click)="clickAction('read', item.pefu_nr_sequencia)"
+											class="btncustom btn btn-sm btn-outline-info mr-1 " style="margin-left: 5px !important;"><i
+												class="fa fa-search cursor-pointer"></i></button>
+										<button type="button" (click)="clickAction('update', item.pefu_nr_sequencia)"
+											class="btncustom btn btn-sm btn-outline-warning mr-1 "><i
+												class="fa fa-edit cursor-pointer"></i></button>
+										<button type="button" (click)="clickAction('delete', item.pefu_nr_sequencia)"
+											class="btncustom btn btn-sm btn-outline-danger mr-1 "><i
+												class="fa fa-trash cursor-pointer"></i></button>
+
+									</td>
+									<td>{{item.func_nr_sequencia}}</td>
+									<td>{{item.perf_nr_sequencia}}</td>
+									<td>{{item.camposAuxiliares.tx_situacao}}</td>
+									<td>{{item.data_dt_edicao | date:'dd/MM/yyyy'}}</td>
+								</tr>
+							</tbody>
+						</table>
+
+						<ngb-pagination *ngIf="dadosList.dados.length!=0" style="margin-top:10px"
+							class="d-flex justify-content-end text-info" (pageChange)="setPage($event)"
+							[collectionSize]="dadosList.total_registro" [pageSize]="dataPage.pageSize"
+							[(page)]="dataPage.currentPage" [maxSize]="5" [boundaryLinks]="true"></ngb-pagination>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

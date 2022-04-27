@@ -1,0 +1,14 @@
+<app-usuarioempresa-list
+*ngIf="!action; else detailchild"
+(onClickAction)="clickAction($event)"
+[idParent]="_idParent"
+[nameIdParent]="_nameIdParent"></app-usuarioempresa-list>
+
+<ng-template #detailchild>
+<app-usuarioempresa-crud
+(onClickAction)="clickAction($event)"
+*ngIf="action" [action]="action"
+[idParent]="_idParent"
+[idChild]="idChild"
+[nameIdParent]="_nameIdParent" ></app-usuarioempresa-crud>
+</ng-template>

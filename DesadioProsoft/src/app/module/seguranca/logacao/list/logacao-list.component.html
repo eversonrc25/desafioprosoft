@@ -1,0 +1,172 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">{{titulo}}</h4>
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <form [formGroup]="formFilter">
+                        <div class="form-row">
+                            <div class="col-md-4 col-12">
+                                <div class="form-group position-relative">
+                                    <label for="idloac_tx_funcionalidade">Funcionalidade</label>
+                                    <ng-select class="custom" [items]="listaFuncionalidade" formControlName="loac_tx_funcionalidade"
+                                    bindLabel="value" bindValue="id">
+                                </ng-select>
+                                    <!-- <input type="text" id="idloac_tx_funcionalidade" formControlName="loac_tx_funcionalidade"
+                                        class="form-control" name="iddevi_tx_descricao"
+                                        placeholder="Funcionalidade"> -->
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group position-relative">
+                                    <label for="form-action-5">Ação</label>
+                                    <ng-select class="custom" [items]="acoes" formControlName="loac_txacao"
+                                        bindLabel="tx_situacao" bindValue="loac_txacao">
+                                    </ng-select>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-12">
+                                <div class="form-group position-relative">
+                                    <label for="idloac_txdados">Dados</label>
+                                    <input type="text" id="idloac_txdados" formControlName="loac_txdados"
+                                        class="form-control" name="iddevi_tx_descricao"
+                                        placeholder="Dados">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group position-relative">
+                                    <label for="form-action-5">Usuario</label>
+                                    <ng-select class="custom" [items]="listaUsuario" formControlName="usua_nr_cadastro"
+                                        bindLabel="usua_tx_nome" bindValue="usua_nr_sequencia">
+                                    </ng-select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group position-relative">
+                                    <label for="idvers_tx_id">Data</label>
+                                    <span class="custom-datepicker-dropdown">
+                                        <div class="form-group mb-0">
+                                            <div class="input-group custom-datepicker-dropdown">
+                                                <input class="form-control" placeholder="DD/MM/AAAA"
+                                                    rInputMask="99/99/9999" name="dp" ngbDatepicker #k="ngbDatepicker"
+                                                    formControlName="data_dt_cadastro">
+                                                <div class="input-group-append">
+                                                    <button class="btn calendar btn-calendar" (click)="k.toggle()" type="button"><i
+                                                            class="fa fa-calendar"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!--<div class="col-sm-12 col-md-2">
+                                <div class="form-group position-relative">
+                                    <label for="form-action-5">Concessionaria</label>
+                                    <ng-select class="custom" (change)="onChange($event)" [items]="listaConcessionaria"
+                                        formControlName="conc_nr_sequencia" bindLabel="conc_tx_descricao"
+                                        bindValue="conc_id_swat">
+                                    </ng-select>
+                                </div>
+                            </div>-->
+                            <div class="col-md-2">
+                                <div class="text-right" style="margin-top:25px">
+                                    <button type="button" class="btn btn-sm btn-outline-primary mr-1 mb-1"
+                                        (click)="onSubmit()">
+                                        <i class="fa fa-search cursor-pointer"></i>&nbsp;Pesquisar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                    <ng-template #loadinganderror>
+                        <div *ngIf="(error$ | async) as errorMessage; else loading">
+                            <app-showerror [message]="errorMessage.message"></app-showerror>
+                        </div>
+                        <ng-template #loading>
+                            <app-loading></app-loading>
+                        </ng-template>
+                    </ng-template>
+                    <span *ngIf="(dados$ | async) as dadosList; else loadinganderror">
+
+
+                        <div class="table-responsive" style="min-height: 300px">
+                            <table class="table table-hover m-0">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Funcionalidade</th>
+                                        <th>Ação</th>
+                                        <!-- <th>Dados</th> -->
+                                        <th>Usuário</th>
+                                        <th>Data Log</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngIf="dadosList.dados.length ==0">
+                                        <td colspan="100%">
+                                            <app-nodata></app-nodata>
+                                        </td>
+                                    </tr>
+
+                                    <ng-container *ngFor="let item of dadosList.dados; let i= index;"
+                                        [ngTemplateOutlet]="linha1"
+                                        [ngTemplateOutletContext]="{item:item, index:i}"></ng-container>
+                                    <ng-template #linha1 let-item="item" let-index="index">
+
+                                        <tr>
+                                            <th> <button type="button" *appUser="[ Role.Read ]" title="Consultar"
+                                                (click)="loac_nr_sequencia=(loac_nr_sequencia==item.loac_nr_sequencia ? '':item.loac_nr_sequencia)"
+                                                    class="btncustom btn btn-sm btn-outline-info mr-1" style="margin-left: 2px !important;">
+                                                    <i class="fa fa-search cursor-pointer"></i></button>
+                                                {{item.loac_tx_funcionalidade}}</th>
+                                            <th>{{item.loac_txacao}}</th>
+                                            <!-- <th>{{item.loac_txdados}}{{trataColunas(item.loac_txdados)}}</th> -->
+                                            <th>{{item.camposAuxiliares['USUA_TX_NOME']}}</th>
+                                            <th>{{item.data_dt_cadastro | date:'dd/MM/yyyy'}}</th>
+                                        </tr>
+                                        <tr *ngIf="loac_nr_sequencia==item.loac_nr_sequencia">
+                                            <th> </th>
+                                            <th colspan="3">
+
+                                                <div class="table-responsive">
+                                                    <table class="table table-sm v-middle">
+                                                        <thead class="thead-light">
+                                                            <tr>
+                                                                <th class="border-top-0">Campo</th>
+                                                                <th class="border-top-0">Valor</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let itemLog of trataColunas(item.loac_txdados); let i= index;">
+                                                                <td><span class="text-primary">{{itemLog["id"]}}</span></td>
+                                                                <td>  <span class="font-medium">{{itemLog["value"]}}</span></td>
+                                                            </tr>
+                                                           
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+ 
+                                            </th>
+                                        </tr>
+                                    </ng-template>
+
+                                </tbody>
+                            </table>
+
+                            <ngb-pagination *ngIf="dadosList.dados.length!=0" style="margin-top:10px"
+                                class="d-flex justify-content-end text-info" (pageChange)="setPage($event)"
+                                [collectionSize]="dadosList.total_registro" [pageSize]="dataPage.pageSize"
+                                [(page)]="dataPage.currentPage" [maxSize]="5" [boundaryLinks]="true"></ngb-pagination>
+
+                        </div>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,50 @@
+# Configurar o SegurancaModule
+## import
+ 
+```typescript
+import { SistemaFuncionalidadeListComponent } from './sistemafuncionalidade/list/sistemafuncionalidade-list.component'
+import { SistemaFuncionalidadeCrudComponent } from './sistemafuncionalidade/crud/sistemafuncionalidade-crud.component'
+import { SistemaFuncionalidadeAcaoComponent } from './sistemafuncionalidade/detail/sistemafuncionalidadeacao/sistemafuncionalidadeacao.component'
+import { SistemaFuncionalidadeAcaoListComponent } from './sistemafuncionalidade/detail/sistemafuncionalidadeacao/list/sistemafuncionalidadeacao-list.component'
+import { SistemaFuncionalidadeAcaoCrudComponent } from './sistemafuncionalidade/detail/sistemafuncionalidadeacao/crud/sistemafuncionalidadeacao-crud.component'
+```
+## Declaration
+```typescript
+SistemaFuncionalidadeListComponent, SistemaFuncionalidadeCrudComponent,
+SistemaFuncionalidadeAcaoComponent, SistemaFuncionalidadeAcaoListComponent, SistemaFuncionalidadeAcaoCrudComponent,
+```
+
+
+# Configurar o SegurancaRoutingModule
+## import
+
+```typescript
+import { SistemaFuncionalidadeListComponent } from './sistemafuncionalidade/list/sistemafuncionalidade-list.component'
+import { SistemaFuncionalidadeCrudComponent } from './sistemafuncionalidade/crud/sistemafuncionalidade-crud.component'
+
+```
+## Rotas
+```typescript
+{
+  path: 'sistemafuncionalidade',
+  component: SistemaFuncionalidadeListComponent,
+  data: { title: 'SistemaFuncionalidade' }
+},
+{
+  path: 'sistemafuncionalidade/create',
+  component: SistemaFuncionalidadeCrudComponent,
+  data: { title: 'Cadastro de SistemaFuncionalidade' }
+},{
+  path: 'sistemafuncionalidade/read/:id',
+  component: SistemaFuncionalidadeCrudComponent,
+  data: { title: 'Cadastro de SistemaFuncionalidade' }
+},{
+  path: 'sistemafuncionalidade/update/:id',
+  component: SistemaFuncionalidadeCrudComponent,
+  data: { title: 'Cadastro de SistemaFuncionalidade' }
+},{
+  path: 'sistemafuncionalidade/delete/:id',
+  component: SistemaFuncionalidadeCrudComponent,
+  data: { title: 'Cadastro de SistemaFuncionalidade' }
+},
+```

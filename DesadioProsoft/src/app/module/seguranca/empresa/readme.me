@@ -1,0 +1,46 @@
+# Configurar o CadastroModule
+## import
+ 
+```typescript
+import { EmpresaListComponent } from './empresa/list/empresa-list.component'
+import { EmpresaCrudComponent } from './empresa/crud/empresa-crud.component'
+```
+## Declaration
+```typescript
+EmpresaListComponent, EmpresaCrudComponent,
+```
+
+
+# Configurar o CadastroRoutingModule
+## import
+
+```typescript
+import { EmpresaListComponent } from './empresa/list/empresa-list.component'
+import { EmpresaCrudComponent } from './empresa/crud/empresa-crud.component'
+
+```
+## Rotas
+```typescript
+{
+  path: 'empresa',
+  component: EmpresaListComponent,
+  data: { title: 'Empresa' }
+},
+{
+  path: 'empresa/create',
+  component: EmpresaCrudComponent,
+  data: { title: 'Cadastro de Empresa' }
+},{
+  path: 'empresa/read/:id',
+  component: EmpresaCrudComponent,
+  data: { title: 'Cadastro de Empresa' }
+},{
+  path: 'empresa/update/:id',
+  component: EmpresaCrudComponent,
+  data: { title: 'Cadastro de Empresa' }
+},{
+  path: 'empresa/delete/:id',
+  component: EmpresaCrudComponent,
+  data: { title: 'Cadastro de Empresa' }
+},
+```

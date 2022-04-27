@@ -1,0 +1,120 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">{{titulo}}</h4>
+      </div>
+      <div class="card-content">
+        <div class="card-body">
+          <ng-template #loadinganderror>
+            <div *ngIf="(error$ | async) as errorMessage; else loading">
+              <app-showerror [message]="errorMessage.message"></app-showerror>
+            </div>
+            <ng-template #loading>
+              <app-loading></app-loading>
+            </ng-template>
+          </ng-template>
+          <span *ngIf="(retornoApi$ | async) as dadosList; else loadinganderror">
+            <form [formGroup]="formDetail">
+              <div class="form-row">
+
+                <div class="col-md-9 col-12">
+                  <div class="form-group position-relative">
+                    <label for="idperf_tx_descricao">Descrição</label>
+                    <input type="text" id="idperf_tx_descricao" formControlName="perf_tx_descricao"  maxlength="80"
+                      class="form-control form-control-sm" name="idperf_tx_descricao" placeholder="Descriação">
+
+                  </div>
+                </div>
+                <div class="col-md-3 col-12">
+                  <div class="form-group position-relative">
+                    <label for="form-action-5">Situação</label>
+                    <ng-select class="custom" [items]="situacao" formControlName="situ_tx_situacao"
+                      bindLabel="tx_situacao" bindValue="situ_tx_situacao">
+                    </ng-select>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="text-right">
+                <button type="button" class="btn btn-sm btn-secondary mr-1 mb-1" (click)="goBack()">
+                  <strong> <i class="ft-x cursor-pointer"></i>&nbsp;Voltar</strong>
+                </button>
+                <button type="button" class="btn btn-sm btn-danger mr-1 mb-1"
+                  *ngIf="actionScreen=='delete';else edicao;" (click)="onSubmit(true)">
+                  <strong> <i class="ft-x cursor-pointer"></i>&nbsp;Apagar registro</strong>
+                </button>
+                <ng-template #edicao>
+                  <span *ngIf="actionScreen!=='read'">
+                    <button type="button" class="btn btn-sm btn-success mr-1 mb-1" (click)="onSubmit(false)">
+                      <strong> <i class="ft-check-square cursor-pointer"></i>&nbsp;Salvar</strong>
+                    </button>
+                    <button type="button" class="btn btn-sm btn-success mr-1 mb-1" (click)="onSubmit(true)">
+                      <strong> <i class="ft-check-square cursor-pointer"></i>&nbsp;Salvar e Sair</strong>
+                    </button>
+                  </span>
+                </ng-template>
+              </div>
+
+            </form>
+
+            <span *ngIf="actionScreen!=='create'">
+              <div class="col-sm-12  " *ngIf="(dadosSistema$ | async) as dadosSistema;"   >
+
+                <div class="card" *ngFor="let itemSistema of dadosSistema.dados" >
+                  <div class="card-header bg-info " style="padding: 10px;padding-bottom: 1px;">
+                    <h4>{{itemSistema.sist_tx_descricao}}</h4>
+                  </div>
+                  <div class="card-body b-l-primary b-r-primary b-b-primary" >
+                    <div class="row">
+                      <div class="card col-4" *ngFor="let itemFuncionalidade of itemSistema.funcionalidades">
+                        <div class="card-body" style="padding: 0px;">
+                          <ul class="list-group">
+                            <li class="list-group-item active"><i class="fa fa-square-o"></i>{{itemFuncionalidade.func_tx_descricao}}</li>
+                            <li class="list-group-item  "
+                            [ngClass]="{'list-group-item-light': itemAcao.ehAssociado == 'N', 'list-group-item-primary':itemAcao.ehAssociado == 'S'  }"
+                            (click)="clickFuncionalidadeAcao( itemAcao, itemFuncionalidade, itemSistema  )" *ngFor="let itemAcao of itemFuncionalidade.acoes">
+                              <i class="fa fa-square-o" 
+                              [ngClass]="{'fa-square-o': itemAcao.ehAssociado == 'N', 'fa-check-square-o':itemAcao.ehAssociado == 'S'  }"
+                              
+                              ></i> {{itemAcao.fuac_tx_descricao}}
+                            </li>
+                            <!-- <li class="list-group-item list-group-item-primary"><i class="fa fa-check-square-o"></i>This
+                              is a secondary list group item</li> -->
+                          </ul>
+                        </div>
+                      </div>
+                     
+          
+                    </div>
+     
+                  </div>
+
+                </div>
+              </div>
+
+
+
+              <!--  <ul ngbNav #nav="ngbNav" [destroyOnHide]="false" class="nav-tabs justify-content-left">
+                <li [ngbNavItem]="perfilfuncionalidade">
+                  <a ngbNavLink>Funcionalidades</a>
+                  <ng-template ngbNavContent>
+                    <app-perfilfuncionalidade [nameIdParent]='getId()' [idParent]="dadosList.dados[getId()]">
+                    </app-perfilfuncionalidade>
+                  </ng-template>
+                </li>
+              </ul>
+
+              <div [ngbNavOutlet]="nav" class="mt-2"></div>
+            -->
+            </span>
+
+          </span>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

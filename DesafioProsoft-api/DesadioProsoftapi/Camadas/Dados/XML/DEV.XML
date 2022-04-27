@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<querys>
+
+<Query ID="FILTRO">
+    <SQL>
+      <![CDATA[
+           SELECT 
+         *
+		 FROM dev
+		 WHERE
+		 1=1
+		    <Pmf nome="id" null="N">        AND id =  @id </Pmf>
+            <Pmf nome="createdAt" null="N"> AND createdAt = @createdAt </Pmf>
+            <Pmf nome="name" null="N">      AND upper(name)   like upper('%'+@name +'%') </Pmf>
+            <Pmf nome="squad" null="N">     AND upper(squad)  like upper('%'+@squad+'%') </Pmf>
+			<Pmf nome="email" null="N">     AND upper(email)  like upper('%'+@email+'%') </Pmf>
+			<Pmf nome="login" null="N">     AND upper(login)  like upper('%'+@login+'%') </Pmf>
+		  ]]>
+    </SQL>
+</Query>
+
+
+
+
+  <Query ID="FILTRO_LISTA">
+    <SQL>
+      <![CDATA[
+        with TBL as (                SELECT 
+		ROW_NUMBER() OVER( ORDER BY id ) AS ORDEMMF_PMF,
+         *
+		 FROM dev
+		 WHERE
+		 1=1
+	       <Pmf nome="id" null="N"> AND id =  @id </Pmf>
+            <Pmf nome="createdAt" null="N"> AND createdAt = @createdAt </Pmf>
+            <Pmf nome="name" null="N"> AND upper(name)    like upper('%'+@name +'%') </Pmf>
+            <Pmf nome="squad" null="N"> AND upper(squad)  like upper('%'+@squad+'%') </Pmf>
+			<Pmf nome="email" null="N"> AND upper(email)  like upper('%'+@email+'%') </Pmf>
+			<Pmf nome="login" null="N"> AND upper(login)  like upper('%'+@login+'%') </Pmf>
+                        ), TBLTOTAL as ( select count(1) as QTDMF_REGMF from TBL  )
+                        SELECT 
+                              *
+                               , T2.QTDMF_REGMF
+			                    FROM TBL T1, TBLTOTAL T2
+                         WHERE ORDEMMF_PMF BETWEEN ((<Pmf nome="PAG_C" null="S"> @PAG_C </Pmf> - 1) * <Pmf nome="QTD_I" null="S"> @QTD_I </Pmf> + 1) AND (<Pmf nome="PAG_C" null="S"> @PAG_C </Pmf> *  <Pmf nome="QTD_I" null="S"> @QTD_I </Pmf> )
+      ]]>
+    </SQL>
+  </Query>
+
+  <Query ID="INSERT">
+    <SQL>
+      <![CDATA[
+          INSERT INTO dev (
+                              id
+							  ,createdAt
+                              ,name
+							  ,avatar
+							  ,squad
+							  ,login
+							  ,email
+
+                 ) VALUES (
+                        <Pmf nome="id" null="N"> @id</Pmf> 
+						 <Pmf nome="createdAt" null="S">, @createdAt</Pmf> 
+                        <Pmf nome="name" null="S">, @name</Pmf>
+                        <Pmf nome="avatar" null="S">, @avatar</Pmf>
+                        <Pmf nome="squad" null="S">,  @squad</Pmf>
+                        <Pmf nome="login" null="S">, @login</Pmf>
+                        <Pmf nome="email" null="S">, @email</Pmf>
+
+                          )
+
+      ]]>
+    </SQL>
+  </Query>
+ 
+ 
+
+  <Query ID="UPDATE">
+    <SQL>
+      <![CDATA[
+        UPDATE dev SET
+           
+            <Pmf nome="name" null="N"> name = @name</Pmf>
+            <Pmf nome="squad" null="N">, squad = @squad</Pmf>
+            <Pmf nome="login" null="N">, login = @login</Pmf>
+			<Pmf nome="email" null="N">, email = @email</Pmf>
+        WHERE
+            <Pmf nome="id" null="S"> id =  @id </Pmf>
+
+          ]]>
+    </SQL>
+  </Query>
+
+  <Query ID="DELETE">
+    <SQL>
+      <![CDATA[
+        UPDATE device SET situ_tx_situacao = case 
+                                              when situ_tx_situacao = 'I' 
+                                              then 'A' else 'I' 
+                                            end,
+	                       data_dt_edicao = SYSDATE
+                         <Pmf nome="usua_nr_edicao" null="S">,usua_nr_edicao =   DECRYPT_DATA( :usua_nr_edicao ) </Pmf>
+	                 WHERE 
+                          <Pmf nome="devi_nr_sequencia" null="S"> devi_nr_sequencia =  DECRYPT_DATA( :devi_nr_sequencia ) </Pmf>
+                          
+
+      ]]>
+    </SQL>
+  </Query>
+
+
+  <Query ID="RECUPERABASE">
+    <SQL>
+      <![CDATA[
+        SELECT 
+         *
+		 FROM dev
+		 WHERE
+		 1=1
+		  <Pmf nome="id" null="N"> AND id =  @id </Pmf>
+           
+		  ]]>
+    </SQL>
+</Query>
+
+
+ 
+
+</querys>

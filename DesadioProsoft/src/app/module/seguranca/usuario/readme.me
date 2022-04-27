@@ -1,0 +1,54 @@
+# Configurar o SegurancaModule
+## import
+ 
+```typescript
+import { UsuarioListComponent } from './usuario/list/usuario-list.component'
+import { UsuarioCrudComponent } from './usuario/crud/usuario-crud.component'
+import { UsuarioPerfilComponent } from './usuario/detail/usuarioperfil/usuarioperfil.component'
+import { UsuarioPerfilListComponent } from './usuario/detail/usuarioperfil/list/usuarioperfil-list.component'
+import { UsuarioPerfilCrudComponent } from './usuario/detail/usuarioperfil/crud/usuarioperfil-crud.component'
+import { UsuarioEmpresaComponent } from './usuario/detail/usuarioempresa/usuarioempresa.component'
+import { UsuarioEmpresaListComponent } from './usuario/detail/usuarioempresa/list/usuarioempresa-list.component'
+import { UsuarioEmpresaCrudComponent } from './usuario/detail/usuarioempresa/crud/usuarioempresa-crud.component'
+```
+## Declaration
+```typescript
+UsuarioListComponent, UsuarioCrudComponent,
+UsuarioPerfilComponent, UsuarioPerfilListComponent, UsuarioPerfilCrudComponent,
+UsuarioEmpresaComponent, UsuarioEmpresaListComponent, UsuarioEmpresaCrudComponent,
+```
+
+
+# Configurar o SegurancaRoutingModule
+## import
+
+```typescript
+import { UsuarioListComponent } from './usuario/list/usuario-list.component'
+import { UsuarioCrudComponent } from './usuario/crud/usuario-crud.component'
+
+```
+## Rotas
+```typescript
+{
+  path: 'usuario',
+  component: UsuarioListComponent,
+  data: { title: 'Usuario' }
+},
+{
+  path: 'usuario/create',
+  component: UsuarioCrudComponent,
+  data: { title: 'Cadastro de Usuario' }
+},{
+  path: 'usuario/read/:id',
+  component: UsuarioCrudComponent,
+  data: { title: 'Cadastro de Usuario' }
+},{
+  path: 'usuario/update/:id',
+  component: UsuarioCrudComponent,
+  data: { title: 'Cadastro de Usuario' }
+},{
+  path: 'usuario/delete/:id',
+  component: UsuarioCrudComponent,
+  data: { title: 'Cadastro de Usuario' }
+},
+```

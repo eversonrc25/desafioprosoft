@@ -1,0 +1,200 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">{{titulo}}</h4>
+      </div>
+      <div class="card-content">
+        <div class="card-body">
+          <ng-template #loadinganderror>
+            <div *ngIf="(error$ | async) as errorMessage; else loading">
+              <app-showerror [message]="errorMessage.message"></app-showerror>
+            </div>
+            <ng-template #loading>
+              <app-loading></app-loading>
+            </ng-template>
+          </ng-template>
+          <span *ngIf="(retornoApi$ | async) as dadosList; else loadinganderror">
+            <form [formGroup]="formDetail">
+              <div class="form-row">
+
+                <div class="col-md-4 col-12">
+                  <div class="form-group position-relative">
+                    <label for="idempr_tx_nome">Nome</label>
+                    <input type="text" id="idempr_tx_nome" formControlName="empr_tx_nome"  maxlength="100"
+                      class="form-control form-control-sm" name="idempr_tx_nome" placeholder="Nome">
+
+                  </div>
+                </div>
+                <div class="col-md-6 col-12">
+                  <div class="form-group position-relative">
+                    <label for="idempr_tx_razao_social">Razão Social</label>
+                    <input type="text" id="idempr_tx_razao_social" formControlName="empr_tx_razao_social"  maxlength="100"
+                      class="form-control form-control-sm" name="idempr_tx_razao_social" placeholder="Razão Social">
+
+                  </div>
+                </div>
+                <div class="col-md-2 col-12">
+                  <div class="form-group position-relative">
+                    <label for="idempr_tx_cnpj">CNPJ</label>
+                    <input type="text" id="idempr_tx_cnpj" formControlName="empr_tx_cnpj" kzMask="99.999.999/9999-99"  maxlength="14"
+                      class="form-control form-control-sm" name="idempr_tx_cnpj" placeholder="CNPJ">
+
+                  </div>
+                </div>
+
+              </div>
+              <div class="form-row">
+                <div class="col-md-4 col-12">
+                  <div class="form-group position-relative">
+                    <label for="idempr_tx_logradouro">Logradouro</label>
+                    <input type="text" id="idempr_tx_logradouro" formControlName="empr_tx_logradouro"  maxlength="80"
+                      class="form-control form-control-sm" name="idempr_tx_logradouro" placeholder="Logradouro">
+
+                  </div>
+                </div>
+                <div class="col-md-1 col-12">
+                  <div class="form-group position-relative">
+                    <label for="idempr_tx_numero">Número</label>
+                    <input type="text" id="idempr_tx_numero" formControlName="empr_tx_numero"  maxlength="15"
+                      class="form-control form-control-sm" name="idempr_tx_numero" placeholder="Número">
+                  </div>
+                </div>
+                <div class="col-md-3 col-12">
+                  <div class="form-group position-relative">
+                    <label for="idempr_tx_bairro">Bairro</label>
+                    <input type="text" id="idempr_tx_bairro" formControlName="empr_tx_bairro"  maxlength="50"
+                      class="form-control form-control-sm" name="idempr_tx_bairro" placeholder="Bairro">
+
+                  </div>
+                </div>
+                <div class="col-md-3 col-12">
+                  <div class="form-group position-relative">
+                    <label for="idempr_tx_municipio">Municipio</label>
+                    <input type="text" id="idempr_tx_municipio" formControlName="empr_tx_municipio"  maxlength="80"
+                      class="form-control form-control-sm" name="idempr_tx_municipio" placeholder="Municipio">
+
+                  </div>
+                </div>
+                <div class="col-md-1 col-12">
+                  <div class="form-group position-relative">
+                    <label for="idempr_tx_uf">UF</label>
+                    <input type="text" id="idempr_tx_uf" formControlName="empr_tx_uf"  maxlength="2"
+                      class="form-control form-control-sm" name="idempr_tx_uf" placeholder="UF">
+
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="form-row">
+
+                <div class="col-md-2 col-12">
+                  <div class="form-group position-relative">
+                    <label for="idempr_tx_cep">CEP</label>
+                    <input type="text" id="idempr_tx_cep" formControlName="empr_tx_cep" kzMask="99999-999"  maxlength="9"
+                      class="form-control form-control-sm" name="idempr_tx_cep" placeholder="CEP">
+                  </div>
+                </div>
+                <div class="col-md-5 col-12">
+                  <div class="form-group position-relative">
+                    <label for="idempr_tx_email">E-mail</label>
+                    <input type="text" id="idempr_tx_email" formControlName="empr_tx_email"  maxlength="100"
+                      class="form-control form-control-sm" name="idempr_tx_email" placeholder="E-mail">
+
+                  </div>
+                </div>
+                <div class="col-md-3 col-12">
+                  <div class="form-group position-relative">
+                    <label for="idempr_tx_telefone">Telefone</label>
+                    <input type="text" id="idempr_tx_telefone" formControlName="empr_tx_telefone" kzMask="(99)99999-9999"  maxlength="20"
+                      class="form-control form-control-sm" name="idempr_tx_telefone" placeholder="Telefone">
+
+                  </div>
+                </div>
+
+                <div class="col-md-2 col-12">
+                  <div class="form-group position-relative">
+                    <label for="form-action-5">Situação</label>
+                    <ng-select class="custom" [items]="situacao" formControlName="situ_tx_situacao"
+                      bindLabel="tx_situacao" bindValue="situ_tx_situacao">
+                    </ng-select>
+
+                  </div>
+                </div>
+              </div>
+    <!--          <div class="form-row">
+                <div class="col-md-3 col-12">
+                  <div class="form-group position-relative">
+                    <label for="idempr_tx_bd">BD</label>
+                    <input type="text" id="idempr_tx_bd" formControlName="empr_tx_bd"
+                      class="form-control form-control-sm" name="idempr_tx_bd" placeholder="BD">
+
+                  </div>
+                </div>
+                <div class="col-md-2 col-12">
+                  <div class="form-group position-relative">
+                    <label for="idempr_tx_esquema">Esquema</label>
+                    <input type="text" id="idempr_tx_esquema" formControlName="empr_tx_esquema"
+                      class="form-control form-control-sm" name="idempr_tx_esquema" placeholder="Esquema">
+
+                  </div>
+                </div>
+                <div class="col-md-2 col-12">
+                  <div class="form-group position-relative">
+                    <label for="idempr_tx_senha">Senha</label>
+                    <input type="text" id="idempr_tx_senha" formControlName="empr_tx_senha"
+                      class="form-control form-control-sm" name="idempr_tx_senha" placeholder="Senha">
+
+                  </div>
+                </div>
+                <div class="col-md-2 col-12">
+                  <div class="form-group position-relative">
+                    <label for="form-action-5">Situação</label>
+                    <ng-select class="custom" [items]="situacao" formControlName="situ_tx_situacao"
+                      bindLabel="tx_situacao" bindValue="situ_tx_situacao">
+                    </ng-select>
+
+                  </div>
+                </div>
+
+              </div> -->
+
+              <div class="text-right">
+                <button type="button" class="btn btn-sm btn-secondary mr-1 mb-1" (click)="goBack()">
+                  <strong> <i class="ft-x cursor-pointer"></i>&nbsp;Voltar</strong>
+                </button>
+                <button type="button" class="btn btn-sm btn-danger mr-1 mb-1"
+                  *ngIf="actionScreen=='delete';else edicao;" (click)="onSubmit(true)">
+                  <strong> <i class="ft-x cursor-pointer"></i>&nbsp;Apagar registro</strong>
+                </button>
+                <ng-template #edicao>
+                  <span *ngIf="actionScreen!=='read'">
+                    <button type="button" class="btn btn-sm btn-success mr-1 mb-1" (click)="onSubmit(false)">
+                      <strong> <i class="ft-check-square cursor-pointer"></i>&nbsp;Salvar</strong>
+                    </button>
+                    <button type="button" class="btn btn-sm btn-success mr-1 mb-1" (click)="onSubmit(true)">
+                      <strong> <i class="ft-check-square cursor-pointer"></i>&nbsp;Salvar e Sair</strong>
+                    </button>
+                  </span>
+                </ng-template>
+              </div>
+
+            </form>
+
+            <span *ngIf="actionScreen!=='create'">
+              <ul ngbNav #nav="ngbNav" [destroyOnHide]="false" class="nav-tabs justify-content-left">
+              </ul>
+
+
+              <div [ngbNavOutlet]="nav" class="mt-2"></div>
+            </span>
+
+          </span>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

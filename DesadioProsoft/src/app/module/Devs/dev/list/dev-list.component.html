@@ -1,0 +1,132 @@
+<div class="row">
+	<div class="col-12">
+		<div class="card">
+			<div class="card-header">
+				<h4 class="card-title">{{titulo}}</h4>
+			</div>
+			<div class="card-content">
+				<div class="card-body">
+					<form [formGroup]="formFilter">
+						<div class="form-row">
+							<div class="col-md-6 col-12">
+								<div class="form-group position-relative">
+									<label for="iddevi_tx_descricao">Nome</label>
+									<input type="text" id="iddevi_tx_descricao" formControlName="name"
+										class="form-control form-control-sm" name="name"
+										placeholder="Nome">
+								</div>
+							</div>
+
+							<div class="col-md-6 col-12">
+								<div class="form-group position-relative">
+									<label for="iddevi_tx_descricao">Squad</label>
+									<input type="text" id="iddevi_tx_descricao" formControlName="squad"
+										class="form-control form-control-sm" name="squad"
+										placeholder="Squad">
+								</div>
+							</div>
+							<div class="col-md-6 col-12">
+								<div class="form-group position-relative">
+									<label for="iddevi_tx_descricao">Usuário</label>
+									<input type="text" id="iddevi_tx_descricao" formControlName="login"
+										class="form-control form-control-sm" name="login"
+										placeholder="Usuário">
+								</div>
+							</div>
+							<div class="col-md-6 col-12">
+								<div class="form-group position-relative">
+									<label for="iddevi_tx_descricao">E-mail</label>
+									<input type="text" id="iddevi_tx_descricao" formControlName="email"
+										class="form-control form-control-sm" name="email"
+										placeholder="E-mail">
+								</div>
+							</div>
+
+
+							
+						</div>
+						<div class="text-right">
+							<button type="button" class="btn btn-sm btn-outline-primary mr-1 mb-1" (click)="onSubmit()">
+								<i class="fa fa-search cursor-pointer"></i>&nbsp;Pesquisar
+							</button>
+						</div>
+					</form>
+					<ng-template #loadinganderror>
+						<div *ngIf="(error$ | async) as errorMessage; else loading">
+							<app-showerror [message]="errorMessage.message"></app-showerror>
+						</div>
+						<ng-template #loading>
+							<app-loading></app-loading>
+						</ng-template>
+					</ng-template>
+					<div class="table-responsive" style="min-height: 300px"
+						*ngIf="(dados$ | async) as dadosList; else loadinganderror">
+						<table class="table table-hover m-0">
+							<thead class="thead-light">
+								<tr>
+									<th class="fit"><button type="button"  [routerLink]="'/dev/dev/create'"
+											class="btn btn-sm btn-outline-info">
+											<i class="fa fa-file-o cursor-pointer"></i>&nbsp;Novo</button></th>
+									<th>id</th>
+									<th>Nome</th>
+									<th>Data Criação</th>
+									<th>Avatar</th>
+									<th>Squad</th>
+									<th>login</th>
+									<th>E-mail</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr *ngIf="dadosList.dados.length ==0">
+									<td colspan="100%">
+										<app-nodata></app-nodata>
+									</td>
+								</tr>
+								<tr *ngFor="let item of dadosList.dados">
+									<td class="fit">
+										<button type="button"  title="Consultar"
+											[routerLink]="'/dev/dev/read/' + item.id"
+											class="btncustom btn btn-sm btn-outline-info mr-1" style="margin-left: 5px !important;"><i
+												class="fa fa-search cursor-pointer"></i></button>
+										<button type="button" title="Alterar"
+											[routerLink]="'/dev/dev/update/' + item.id"
+											class="btncustom btn btn-sm btn-outline-warning mr-1"><i
+												class="fa fa-edit cursor-pointer"></i></button>
+									 	
+										<button type="button"  title="Excluir"
+											[routerLink]="'/dev/dev/delete/' + item.id"
+											class="btncustom btn btn-sm btn-outline-danger mr-1"><i
+												class="fa fa-trash cursor-pointer"></i></button>
+
+									</td>
+ 
+
+
+
+									<td>{{item.id}}</td>
+									<td> {{item.name}}</td>
+									<td>{{item.createdAt | date:'dd/MM/yyyy'}}</td>
+									<td>{{item.avatar}}</td>
+									<td>{{item.squad}}</td>
+									<td>{{item.login}}</td>
+									<td>{{item.email}}</td>
+								 
+									<td>
+										<span  class="label label-rounded " [ngClass]="{'label-danger' : item.situ_tx_situacao=='I', 'label-default text-danger' : item.situ_tx_situacao=='P', 'label-success' : item.situ_tx_situacao=='A', 'label-primary' : item.situ_tx_situacao=='L'}">{{ item.camposAuxiliares.TX_SITUACAO}}</span>
+ </td>
+									
+								</tr>
+							</tbody>
+						</table>
+
+						<ngb-pagination *ngIf="dadosList.dados.length!=0" style="margin-top:10px"
+							class="d-flex justify-content-end text-info" (pageChange)="setPage($event)"
+							[collectionSize]="dadosList.total_registro" [pageSize]="dataPage.pageSize"
+							[(page)]="dataPage.currentPage" [maxSize]="5" [boundaryLinks]="true"></ngb-pagination>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

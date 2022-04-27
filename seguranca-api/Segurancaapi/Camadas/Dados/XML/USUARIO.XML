@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<querys>
+
+<Query ID="FILTRO">
+    <SQL>
+      <![CDATA[
+        SELECT 
+                ENCRYPT_DATA(tabm.usua_nr_sequencia)  as usua_nr_sequencia
+               , tabm.usua_tx_nome
+               , tabm.usua_tx_apelido
+               , tabm.usua_tx_email
+               , tabm.usua_tx_telefone
+               , tabm.situ_tx_situacao
+               , tabm.usua_tx_notifica
+               , ENCRYPT_DATA(tabm.usua_nr_cadastro)  as usua_nr_cadastro
+               , ENCRYPT_DATA(tabm.usua_nr_edicao)  as usua_nr_edicao
+               , tabm.data_dt_cadastro
+               , tabm.data_dt_edicao
+               , tabm.usua_tx_ad
+               , case when situ_tx_situacao = 'A' then 'Ativo' else 'Inativo' end tx_situacao
+               , case when usua_tx_notifica = 'S' then 'Sim' else 'Não' end tx_notifica
+          FROM usuario   tabm
+          WHERE 1=1
+            <Pmf nome="usua_nr_sequencia" null="N"> AND tabm.usua_nr_sequencia = DECRYPT_DATA(:usua_nr_sequencia) </Pmf>
+            <Pmf nome="usua_tx_nome" null="N"> AND UPPER(tabm.usua_tx_nome) like UPPER( '%'||:usua_tx_nome||'%')</Pmf>
+            <Pmf nome="usua_tx_apelido" null="N"> AND UPPER(tabm.usua_tx_apelido)  like UPPER( '%'||:usua_tx_apelido||'%')</Pmf>
+            <Pmf nome="usua_tx_email" null="N"> AND UPPER(tabm.usua_tx_email)  like UPPER( '%'||:usua_tx_email||'%')</Pmf>
+            <Pmf nome="usua_tx_ad" null="N"> AND UPPER( tabm.usua_tx_ad)  like UPPER( '%'||:usua_tx_ad||'%')</Pmf>
+            <Pmf nome="usua_tx_telefone" null="N"> AND tabm.usua_tx_telefone = :usua_tx_telefone</Pmf>
+            <Pmf nome="situ_tx_situacao" null="N"> AND tabm.situ_tx_situacao = :situ_tx_situacao</Pmf>
+            <Pmf nome="usua_nr_cadastro" null="N"> AND tabm.usua_nr_cadastro = DECRYPT_DATA(:usua_nr_cadastro) </Pmf>
+            <Pmf nome="usua_nr_edicao" null="N"> AND tabm.usua_nr_edicao = DECRYPT_DATA(:usua_nr_edicao) </Pmf>
+            <Pmf nome="data_dt_cadastro" null="N"> AND tabm.data_dt_cadastro = :data_dt_cadastro</Pmf>
+            <Pmf nome="data_dt_edicao" null="N"> AND tabm.data_dt_edicao = :data_dt_edicao</Pmf>
+		  ]]>
+    </SQL>
+</Query>
+
+
+  <Query ID="FILTRO_LISTA">
+    <SQL>
+      <![CDATA[
+          with TBL as ( SELECT ROW_NUMBER() OVER( ORDER BY usua_nr_sequencia ) AS ORDEMMF_PMF,
+                                 ENCRYPT_DATA(tabm.usua_nr_sequencia)  as usua_nr_sequencia
+                              , tabm.usua_tx_nome
+                              , tabm.usua_tx_apelido
+                              , tabm.usua_tx_email 
+                              , tabm.usua_tx_telefone
+                              , tabm.situ_tx_situacao
+                              , tabm.usua_tx_notifica
+                              ,   ENCRYPT_DATA( tabm.usua_nr_cadastro)  as usua_nr_cadastro
+                              ,    ENCRYPT_DATA(tabm.usua_nr_edicao)  as usua_nr_edicao
+                              , tabm.data_dt_cadastro
+                              , tabm.data_dt_edicao
+                              , tabm.usua_tx_ad
+                              , case when tabm.situ_tx_situacao = 'A' then 'Ativo' else 'Inativo' end tx_situacao
+                              , case when usua_tx_notifica = 'S' then 'Sim' else 'Não' end tx_notifica
+                         FROM usuario tabm
+                        WHERE	1=1 
+                          <Pmf nome="usua_nr_sequencia" null="N"> AND tabm.usua_nr_sequencia = DECRYPT_DATA(:usua_nr_sequencia) </Pmf>
+                          <Pmf nome="usua_tx_nome" null="N"> AND UPPER(tabm.usua_tx_nome) like UPPER( '%'||:usua_tx_nome||'%')</Pmf>
+                          <Pmf nome="usua_tx_apelido" null="N"> AND UPPER(tabm.usua_tx_apelido)  like UPPER( '%'||:usua_tx_apelido||'%')</Pmf>
+                          <Pmf nome="usua_tx_email" null="N"> AND UPPER(tabm.usua_tx_email)  like UPPER( '%'||:usua_tx_email||'%')</Pmf>
+                          <Pmf nome="usua_tx_ad" null="N"> AND UPPER( tabm.usua_tx_ad)  like UPPER( '%'||:usua_tx_ad||'%')</Pmf>
+                          <Pmf nome="usua_tx_telefone" null="N"> AND tabm.usua_tx_telefone = :usua_tx_telefone</Pmf>
+                          <Pmf nome="situ_tx_situacao" null="N"> AND tabm.situ_tx_situacao = :situ_tx_situacao</Pmf>
+                          <Pmf nome="usua_nr_cadastro" null="N"> AND tabm.usua_nr_cadastro = DECRYPT_DATA(:usua_nr_cadastro) </Pmf>
+                          <Pmf nome="usua_nr_edicao" null="N"> AND tabm.usua_nr_edicao = DECRYPT_DATA(:usua_nr_edicao) </Pmf>
+                          <Pmf nome="data_dt_cadastro" null="N"> AND tabm.data_dt_cadastro = :data_dt_cadastro</Pmf>
+                          <Pmf nome="data_dt_edicao" null="N"> AND tabm.data_dt_edicao = :data_dt_edicao</Pmf>
+                        ), TBLTOTAL as ( select count(1) as QTDMF_REGMF from TBL  )
+                        SELECT 
+                               usua_nr_sequencia
+                               , usua_tx_nome
+                               , usua_tx_apelido
+                               , usua_tx_email
+                               , usua_tx_telefone
+                               , situ_tx_situacao
+                               , usua_tx_notifica
+                               , usua_nr_cadastro
+                               , usua_nr_edicao
+                               , data_dt_cadastro
+                               , data_dt_edicao
+                               ,  tx_situacao
+                               ,  tx_notifica
+                               , T2.QTDMF_REGMF
+			                    FROM TBL T1, TBLTOTAL T2
+                         WHERE ORDEMMF_PMF BETWEEN ((<Pmf nome="PAG_C" null="S"> :PAG_C </Pmf> - 1) * <Pmf nome="QTD_I" null="S"> :QTD_I </Pmf> + 1) AND (<Pmf nome="PAG_C" null="S"> :PAG_C </Pmf> *  <Pmf nome="QTD_I" null="S"> :QTD_I </Pmf> )
+      ]]>
+    </SQL>
+  </Query>
+
+  <Query ID="INSERT">
+    <SQL>
+      <![CDATA[
+      
+
+          INSERT INTO usuario (
+                              data_dt_cadastro
+                              ,data_dt_edicao
+                              ,usua_tx_password
+                              ,usua_nr_sequencia
+                              <Pmf nome="usua_tx_nome" null="N">, usua_tx_nome</Pmf>
+                              <Pmf nome="usua_tx_apelido" null="N">, usua_tx_apelido</Pmf>
+                              <Pmf nome="usua_tx_email" null="N">, usua_tx_email</Pmf>
+                              <Pmf nome="usua_tx_telefone" null="N">, usua_tx_telefone</Pmf>
+                              <Pmf nome="situ_tx_situacao" null="N">, situ_tx_situacao</Pmf>
+                              <Pmf nome="usua_tx_notifica" null="N">, usua_tx_notifica</Pmf>
+                              <Pmf nome="usua_nr_cadastro" null="N">, usua_nr_cadastro</Pmf>
+                              <Pmf nome="usua_nr_edicao" null="N">, usua_nr_edicao</Pmf>
+                              <Pmf nome="usua_tx_ad" null="N">, usua_tx_ad</Pmf>
+                             
+                 ) VALUES (
+                             sysdate
+                             ,sysdate
+                             ,'Nova:Senha$321654789'
+                             ,usua_seq.nextval
+                              <Pmf nome="usua_tx_nome" null="N">, :usua_tx_nome</Pmf>
+                              <Pmf nome="usua_tx_apelido" null="N">, :usua_tx_apelido</Pmf>
+                              <Pmf nome="usua_tx_email" null="N">, :usua_tx_email</Pmf>
+                              <Pmf nome="usua_tx_telefone" null="N">, :usua_tx_telefone</Pmf>
+                              <Pmf nome="situ_tx_situacao" null="N">, :situ_tx_situacao</Pmf>
+                               <Pmf nome="usua_tx_notifica" null="N">, :usua_tx_notifica</Pmf>
+                              <Pmf nome="usua_nr_cadastro" null="N">,DECRYPT_DATA( :usua_nr_cadastro )</Pmf>
+                              <Pmf nome="usua_nr_edicao" null="N">, DECRYPT_DATA( :usua_nr_edicao )</Pmf>
+                              <Pmf nome="usua_tx_ad" null="N">, :usua_tx_ad</Pmf>
+                          )
+
+ 
+      ]]>
+    </SQL>
+  </Query>
+
+
+   <Query ID="getIdSequence">
+    <SQL>
+      <![CDATA[
+select ENCRYPT_DATA(usua_seq.CURRVAL) from dual
+            ]]>
+    </SQL>
+  </Query>
+ 
+
+  <Query ID="UPDATE">
+    <SQL>
+      <![CDATA[
+        UPDATE usuario SET
+                         data_dt_edicao = sysdate
+                         <Pmf nome="usua_tx_nome" null="N">,usua_tx_nome = :usua_tx_nome</Pmf>
+                         <Pmf nome="usua_tx_apelido" null="N">,usua_tx_apelido = :usua_tx_apelido</Pmf>
+                         <Pmf nome="usua_tx_email" null="N">,usua_tx_email = :usua_tx_email</Pmf>
+                         <Pmf nome="usua_tx_telefone" null="N">,usua_tx_telefone = :usua_tx_telefone</Pmf>
+                         <Pmf nome="situ_tx_situacao" null="N">,situ_tx_situacao = :situ_tx_situacao</Pmf>
+                          <Pmf nome="usua_tx_notifica" null="N">,usua_tx_notifica = :usua_tx_notifica</Pmf>
+                         <Pmf nome="usua_nr_edicao" null="N">,usua_nr_edicao = DECRYPT_DATA( :usua_nr_edicao )</Pmf>
+                         <Pmf nome="usua_tx_ad" null="N">,usua_tx_ad =  :usua_tx_ad </Pmf>
+                         
+                  WHERE
+                         <Pmf nome="usua_nr_sequencia" null="S"> usua_nr_sequencia = DECRYPT_DATA( :usua_nr_sequencia )</Pmf>
+
+          ]]>
+    </SQL>
+  </Query>
+
+  <Query ID="DELETE">
+    <SQL>
+      <![CDATA[
+        UPDATE usuario SET situ_tx_situacao = case 
+                                              when situ_tx_situacao = 'I' 
+                                              then 'A' else 'I' 
+                                            end,
+	                       data_dt_edicao = sysdate
+                         <Pmf nome="usua_nr_edicao" null="S">,usua_nr_edicao = DECRYPT_DATA( :usua_nr_edicao )</Pmf>
+	                 WHERE 
+                          <Pmf nome="usua_nr_sequencia" null="S"> usua_nr_sequencia = DECRYPT_DATA( :usua_nr_sequencia )</Pmf>
+                          
+
+      ]]>
+    </SQL>
+  </Query>
+
+
+  <Query ID="VALIDA_USUARIO_2">
+    <SQL>
+      <![CDATA[
+            select 
+              CONVERT(VARCHAR(1000), usua_nr_sequencia, 1 ) as usua_nr_sequencia,
+              usua_tx_nome , usua_tx_apelido, 
+                   usua_tx_email, situ_tx_situacao,
+                   usua_tx_notifica
+              from usuario 
+             where situ_tx_situacao = 'A'
+               and <Pmf nome="usua_tx_email" null="S"> usua_tx_email = :usua_tx_email</Pmf>  
+               and <Pmf nome="usua_tx_password" null="S"> PWDCOMPARE(:usua_tx_password,usua_tx_password, 0) = 1  </Pmf> 
+   
+    ]]>
+    </SQL>
+  </Query>
+
+  <Query ID="VALIDA_USUARIO">
+    <SQL>
+      <![CDATA[
+            select 
+		  ENCRYPT_DATA( usua_nr_sequencia ) as usua_nr_sequencia,  
+		USUA.usua_tx_nome usua_tx_nome, 
+		USUA.usua_tx_apelido usua_tx_apelido 
+from usuario usua 
+where 
+	 USUA.situ_tx_situacao       = 'A'
+	<Pmf nome="Usua_tx_ad" null="S"> and UPPER(usua.usua_tx_ad) = UPPER(:usua_tx_ad) </Pmf> 
+   
+                            
+   
+    ]]>
+    </SQL>
+  </Query>
+
+    <Query ID="GETPARAMETRO">
+    <SQL>
+      <![CDATA[
+          select * from parametro
+   
+    ]]>
+    </SQL>
+  </Query>
+
+  <Query ID="VALIDA_USUARIOCorreto">
+    <SQL>
+      <![CDATA[
+            select 
+		to_char(USUA.NRIDENTIFICADOR)  usua_nr_sequencia,  
+		USUA.NMUSUARIO usua_tx_nome, 
+		USUA.NMAPELIDO usua_tx_apelido 
+from usuario usua 
+ 
+where 
+	 USUA.FLSTATUS       = 'A'
+	<Pmf nome="usua_tx_email" null="S"> and UPPER(usua.cdlogin) = UPPER(:usua_tx_email) </Pmf> 
+    <Pmf nome="usua_tx_password" null="S"> and usua.dcsenha = :usua_tx_password </Pmf>
+                            
+   
+    ]]>
+    </SQL>
+  </Query>
+
+  <Query ID="GETUSUARIO_ACESSO">
+    <SQL>
+      <![CDATA[
+         
+         
+            SELECT FUNC_TX_NOME, FUNC_TX_URL, FUAC_TX_DESCRICAO, FUAC_TX_NOME, FUAC_TX_ROTA, FUAC_TX_REGRA 
+  FROM usuario_perfil USPE INNER JOIN PERFIL                      PERF ON ( USPE.perf_nr_sequencia = PERF.perf_nr_sequencia )
+                           INNER JOIN perfil_funcionalidade       PEFU ON ( PERF.perf_nr_sequencia = PEFU.perf_nr_sequencia )
+                           INNER JOIN funcionalidade              SIFU ON ( PEFU.func_nr_sequencia = SIFU.func_nr_sequencia )
+                           INNER JOIN funcionalidade_acao         SFAC ON ( SIFU.func_nr_sequencia = SFAC.func_nr_sequencia 
+                                                                            AND PEFU.fuac_nr_sequencia = SFAC.fuac_nr_sequencia )
+ WHERE USPE.situ_tx_situacao = 'A'
+   AND PERF.situ_tx_situacao = 'A'  
+   AND PEFU.situ_tx_situacao = 'A'  
+   AND SIFU.situ_tx_situacao = 'A'  
+   AND SFAC.situ_tx_situacao = 'A' 
+   <Pmf nome="usua_nr_sequencia" null="S"> AND  USPE.usua_nr_sequencia = DECRYPT_DATA(:usua_nr_sequencia) </Pmf> 
+
+ 
+ 
+
+      ]]>
+    </SQL>
+  </Query>
+  
+
+   <Query ID="GET_USUARIO_EMPRESAS">
+    <SQL>
+      <![CDATA[
+            
+            SELECT DISTINCT 
+                E1.CDEMPRESA, 
+                E1.CDFILIAL, 
+                E1.NMEMPRESA, 
+                E1.DCRZSOCIAL,
+                (SELECT DBO.FN_GER_FORMATAR_CAMPO(SUBSTRING(E1.NOCGCCPF, 1, 14), '99.999.999/9999-99') ) AS NOCGCCPF
+                
+            FROM AFMT1 AF1
+             INNER JOIN EMPS1 E1  ON (E1.CDEMPRESA = AF1.CDEMPRESA AND E1.CDFILIAL  = AF1.CDFILIAL AND AF1.TPAFM IN ('G','S') )
+           
+           WHERE 
+           
+              <Pmf nome="CDFORNEC" null="N">  AF1.CDFORNEC = :CDFORNEC</Pmf> 
+
+      ]]>
+    </SQL>
+  </Query>
+
+
+
+<Query ID="GERATOKENSENHA">
+    <SQL>
+      <![CDATA[
+	 exec  GeraTokenSenha <Pmf nome="usua_tx_ad" null="S"> :usua_tx_ad</Pmf>
+	    ]]>
+    </SQL>
+  </Query>
+
+
+<Query ID="VALIDATOKEN">
+    <SQL>
+      <![CDATA[
+	 exec  getTokenSenha <Pmf nome="token" null="S"> :token</Pmf>
+	    ]]>
+    </SQL>
+  </Query>
+
+
+<Query ID="ALTERASENHA">
+    <SQL>
+      <![CDATA[
+	 exec  AlteraSenha  <Pmf nome="token" null="S"> :token</Pmf>,
+    <Pmf nome="usua_tx_ad" null="S"> :usua_tx_ad</Pmf>,
+     <Pmf nome="usua_tx_password" null="S"> :usua_tx_password</Pmf>
+	    ]]>
+    </SQL>
+  </Query>
+
+  <Query ID="getDestinatariosEmails">
+    <SQL>
+      <![CDATA[
+        
+        SELECT 
+          US.IDUSUARIO,
+          US.NMUSUARIO,
+          US.DCEMAIL
+
+        FROM OBJETO OB
+          INNER JOIN PERFIL_ACESSO PA ON ( OB.OBJE_NR_SEQUENCIA = PA.OBJE_NR_SEQUENCIA )
+          INNER JOIN USUARIO_PERFIL UP ON (PA.PERF_NR_SEQUENCIA = UP.PERF_NR_SEQUENCIA AND UP.USPE_TX_SITUACAO='A')
+          INNER JOIN USUARIO US ON (US.IDUSUARIO = UP.IDUSUARIO)
+          WHERE
+          US.FLSTATUS='A'
+          <Pmf nome="DCEMAIL" null="N">  AND  OB.OBJE_TX_NOMESEGURANCA = UPPER(:DCEMAIL)</Pmf>
+      ]]>
+    </SQL>
+  </Query>
+
+
+
+  <Query ID="USUARIO_ASSOCIACAO">
+    <SQL>
+      <![CDATA[
+
+        SELECT
+          perf.Perf_nr_sequencia, 
+          Perf.Perf_tx_descricao
+         ,IIF(ISNULL(up.perf_nr_sequencia,-1)=-1, 'N', 'S') as marcado 
+         
+       FROM  perfil perf 
+       LEFT OUTER JOIN   USUARIO_PERFIL UP ON ( UP.PERF_NR_SEQUENCIA = PERF.PERF_NR_SEQUENCIA AND UP.USPE_TX_SITUACAO = 'A'  <Pmf nome="IDUSUARIO" null="N" >AND UP.IDUSUARIO = :IDUSUARIO</Pmf>  )
+       
+       WHERE PERF.PERF_TX_SITUACAO = 'A'
+ 
+          ORDER BY PERF_TX_DESCRICAO, perf.PERF_NR_SEQUENCIA
+          
+          
+ 	   
+       ]]>
+    </SQL>
+  </Query>
+
+
+  <Query ID="USUARIO_EMPRESA_ASSOCIACAO">
+    <SQL>
+      <![CDATA[
+
+       	SELECT
+        DISTINCT E.CDEMPRESA,E.NMEMPRESA,
+
+	      IIF(ISNULL(UE.IDUSUARIO,-1)=-1, 'N', 'S') AS MARCADO
+        ,(SELECT DBO.FN_GER_FORMATAR_CAMPO(SUBSTRING(e.nocgccpf, 1, 14), '99.999.999/9999-99') ) as cgccpf
+	      --, E.*,UE.*
+	      FROM EMPS1 E
+	      LEFT OUTER JOIN  USUARIO_EMPRESA UE ON (E.CDEMPRESA = UE.CDEMPRESA AND E.CHDELECAO = 0 <Pmf nome="IDUSUARIO" null="N" >AND UE.IDUSUARIO = :IDUSUARIO</Pmf>)
+	
+	      ORDER BY E.NMEMPRESA
+          
+          
+ 	   
+       ]]>
+    </SQL>
+  </Query>
+
+</querys>

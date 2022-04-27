@@ -1,0 +1,106 @@
+
+    //  {
+    //   "DownstreamPathTemplate": "/",
+    //   "DownstreamScheme": "http",
+    //   "DownstreamHostAndPorts": [
+    //     {
+    //       "Host": "localhost",
+    //       "Port": 5005
+    //     }
+    //   ],
+    //   "UpstreamPathTemplate": "/pedido/",
+    //   "LoadBalancer": "RoundRobin",
+    //   "UpstreamHttpMethod": [
+    //     "Get",
+    //     "Post",
+    //     "Put",
+    //     "Delete",
+    //     "Options"
+    //   ],
+    //   "AuthenticationOptions": {
+    //     "AuthenticationProviderKey": "TestKey",
+    //     "AllowedScopes": []
+    //   }
+    // },
+    // {
+    //   "DownstreamPathTemplate": "/{everything}",
+    //   "DownstreamScheme": "http",
+    //   "DownstreamHostAndPorts": [
+    //     {
+    //       "Host": "localhost",
+    //       "Port": 5005
+    //     }
+    //   ],
+    //   "UpstreamPathTemplate": "/pedido/{everything}",
+    //   "UpstreamHttpMethod": [
+    //     "Get",
+    //     "Post",
+    //     "Put",
+    //     "Delete",
+    //     "Options"
+    //   ],
+    //   "RateLimitOptions": {
+    //     "ClientWhitelist": [],
+    //     "EnableRateLimiting": true,
+    //     "Period": "1s",
+    //     "PeriodTimespan": 1,
+    //     "Limit": 1
+    //   },
+    //   "AuthenticationOptions": {
+    //     "AuthenticationProviderKey": "TestKey",
+    //     "AllowedScopes": []
+    //   }
+    // },
+    // {
+    //   "DownstreamPathTemplate": "/",
+    //   "DownstreamScheme": "http",
+    //   "DownstreamHostAndPorts": [
+    //     {
+    //       "Host": "localhost",
+    //       "Port": 5006
+    //     }
+    //   ],
+    //   "UpstreamPathTemplate": "/catalogo/",
+    //   "UpstreamHttpMethod": [
+    //     "Get",
+    //     "Post",
+    //     "Put",
+    //     "Delete",
+    //     "Options"
+    //   ],
+    //   "AuthenticationOptions": {
+    //     "AuthenticationProviderKey": "TestKey",
+    //     "AllowedScopes": []
+    //   }
+    // },
+    // {
+    //   "DownstreamPathTemplate": "/{everything}",
+    //   "DownstreamScheme": "http",
+    //   "DownstreamHostAndPorts": [
+    //     {
+    //       "Host": "localhost",
+    //       "Port": 5006
+    //     }
+    //   ],
+    //   "UpstreamPathTemplate": "/catalogo/{everything}",
+    //   "UpstreamHttpMethod": [
+    //     "Get",
+    //     "Post",
+    //     "Put",
+    //     "Delete",
+    //     "Options"
+    //   ],
+    //   "AuthenticationOptions": {
+    //     "AuthenticationProviderKey": "TestKey",
+    //     "AllowedScopes": []
+    //   }
+    // }
+
+
+
+     /*,
+    "QoSOptions": {
+      "ExceptionsAllowedBeforeBreaking":3,
+      "DurationOfBreak":1000,
+      "TimeoutValue":5000
+  }*/

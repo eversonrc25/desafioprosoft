@@ -1,0 +1,46 @@
+# Configurar o SegurancaModule
+## import
+ 
+```typescript
+import { SistemaListComponent } from './sistema/list/sistema-list.component'
+import { SistemaCrudComponent } from './sistema/crud/sistema-crud.component'
+```
+## Declaration
+```typescript
+SistemaListComponent, SistemaCrudComponent,
+```
+
+
+# Configurar o SegurancaRoutingModule
+## import
+
+```typescript
+import { SistemaListComponent } from './sistema/list/sistema-list.component'
+import { SistemaCrudComponent } from './sistema/crud/sistema-crud.component'
+
+```
+## Rotas
+```typescript
+{
+  path: 'sistema',
+  component: SistemaListComponent,
+  data: { title: 'Sistema' }
+},
+{
+  path: 'sistema/create',
+  component: SistemaCrudComponent,
+  data: { title: 'Cadastro de Sistema' }
+},{
+  path: 'sistema/read/:id',
+  component: SistemaCrudComponent,
+  data: { title: 'Cadastro de Sistema' }
+},{
+  path: 'sistema/update/:id',
+  component: SistemaCrudComponent,
+  data: { title: 'Cadastro de Sistema' }
+},{
+  path: 'sistema/delete/:id',
+  component: SistemaCrudComponent,
+  data: { title: 'Cadastro de Sistema' }
+},
+```
